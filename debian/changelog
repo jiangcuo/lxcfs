@@ -1,0 +1,6 @@
+lxcfs (0.7-pve1) unstable; urgency=low
+
+  * assemble package for Proxmox VE
+ 
+ -- Proxmox Support Team <support@proxmox.com>  Mon, 06 Apr 2015 15:59:54 +0200
+
