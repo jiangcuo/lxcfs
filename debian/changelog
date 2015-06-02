@@ -1,3 +1,15 @@
+lxcfs (0.9-pve1) unstable; urgency=medium
+
+  * update to 0.9
+
+ -- Proxmox Support Team <support@proxmox.com>  Tue, 02 Jun 2015 05:46:53 +0200
+
+lxcfs (0.7-pve2) unstable; urgency=medium
+
+  * do not start containers if lxcfs is not running
+
+ -- Proxmox Support Team <support@proxmox.com>  Thu, 07 May 2015 07:20:57 +0200
+
 lxcfs (0.7-pve1) unstable; urgency=low
 
   * assemble package for Proxmox VE

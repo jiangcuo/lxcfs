@@ -1,7 +1,7 @@
 RELEASE=4.0
 
 PACKAGE=lxcfs
-PKGVER=0.7
+PKGVER=0.9
 DEBREL=pve1
 
 SRCDIR=${PACKAGE}
@@ -18,7 +18,8 @@ deb ${DEB}: ${SRCTAR}
 	rm -rf ${SRCDIR}
 	tar xf ${SRCTAR}
 	cp -a debian ${SRCDIR}/debian
-	echo "git clone git://git.proxmox.com/git/lxc.git\\ngit checkout ${GITVERSION}" >  ${SRCDIR}/debian/SOURCE
+	echo "git clone git://git.proxmox.com/git/lxcfs.git\\ngit checkout ${GITVERSION}" >  ${SRCDIR}/debian/SOURCE
+	echo "debian/SOURCE" >> ${SRCDIR}/debian/docs
 	cd ${SRCDIR}; dpkg-buildpackage -rfakeroot -b -us -uc
 	#lintian ${DEB}
 
