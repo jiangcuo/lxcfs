@@ -1,0 +1,14 @@
+Index: new/share/lxc.mount.hook.in
+===================================================================
+--- new.orig/share/lxc.mount.hook.in
++++ new/share/lxc.mount.hook.in
+@@ -15,6 +15,9 @@ if [ -d @LXCFSTARGETDIR@/proc/ ]; then
+         [ -e "${LXC_ROOTFS_MOUNT}/proc/$(basename $entry)" ] || continue
+         mount -n --bind $entry ${LXC_ROOTFS_MOUNT}/proc/$(basename $entry)
+     done
++else
++    >&2 echo "missing /var/lib/lxcfs/proc/ - lxcfs not running?"
++    exit 1
+ fi
+ 
+ # /sys/fs/cgroup files

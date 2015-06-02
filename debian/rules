@@ -4,4 +4,4 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@  --with autotools_dev,autoreconf,systemd
+	dh $@  --with autotools_dev,autoreconf,systemd,quilt
