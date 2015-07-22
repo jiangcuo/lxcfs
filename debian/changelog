@@ -1,3 +1,9 @@
+lxcfs (0.9-pve2) unstable; urgency=medium
+
+  * update to latest upstream
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 22 Jul 2015 09:38:11 +0200
+
 lxcfs (0.9-pve1) unstable; urgency=medium
 
   * update to 0.9
