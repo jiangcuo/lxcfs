@@ -1,3 +1,9 @@
+lxcfs (0.10-pve1) unstable; urgency=medium
+
+  * update to latest upstream (allow systemd to escape its init.scope cgroup)
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 21 Oct 2015 07:09:33 +0200
+
 lxcfs (0.9-pve2) unstable; urgency=medium
 
   * update to latest upstream
