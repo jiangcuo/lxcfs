@@ -1,0 +1,27 @@
+From 05e1642e07216fad032d64abd52999d15a732bf4 Mon Sep 17 00:00:00 2001
+From: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Date: Wed, 21 Oct 2015 11:31:01 +0200
+Subject: [PATCH lxcfs 1/2] lxc mount hook: add missing space before ]
+
+Otherwise [ interprets the ] as part of the path and also
+errors about a missing ']'
+---
+ share/lxc.mount.hook.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/share/lxc.mount.hook.in b/share/lxc.mount.hook.in
+index 7194ab8..5ed2d60 100755
+--- a/share/lxc.mount.hook.in
++++ b/share/lxc.mount.hook.in
+@@ -30,7 +30,7 @@ if [ -d "${LXC_ROOTFS_MOUNT}/sys/fs/cgroup" ]; then
+                 continue
+             fi
+ 
+-	    if [ ! -d ${LXC_ROOTFS_MOUNT}/sys/fs/cgroup/$DEST]; then
++	    if [ ! -d ${LXC_ROOTFS_MOUNT}/sys/fs/cgroup/$DEST ]; then
+                 mkdir ${LXC_ROOTFS_MOUNT}/sys/fs/cgroup/$DEST
+ 	    fi
+ 
+-- 
+2.1.4
+
