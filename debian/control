@@ -3,13 +3,13 @@ Section: admin
 Priority: optional
 Maintainer: Proxmox Support Team <support@proxmox.com>
 Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, help2man,
-  pkg-config, libcgmanager-dev, libfuse-dev, dh-systemd
+  pkg-config, libfuse-dev, dh-systemd
 Standards-Version: 3.9.5
 Homepage: https://linuxcontainers.org
 
 Package: lxcfs
 Architecture: any
-Depends: cgmanager, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: LXC userspace filesystem
  LXCFS is a simple userspace filesystem designed to workaround some current
  limitations of the Linux kernel. The main driver for this work was the

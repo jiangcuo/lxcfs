@@ -1,3 +1,11 @@
+lxcfs (0.11-pve1) unstable; urgency=medium
+
+  * update to latest upstream (drop libnih, cgmanager)
+
+  * remove 0001-lxc-mount-hook-add-missing-space-before.patch (upstream)
+
+ -- Proxmox Support Team <support@proxmox.com>  Tue, 10 Nov 2015 08:10:08 +0100
+
 lxcfs (0.10-pve2) unstable; urgency=medium
 
   * added lxc mount hook fixes
