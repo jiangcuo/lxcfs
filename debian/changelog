@@ -1,5 +1,7 @@
 lxcfs (0.12-pve1) unstable; urgency=medium
 
+  * use line buffered mode for stdout
+
   * update to latest upstream
     (commit 2407b199fc81b33c3e7fe55b838dc67941258350)
 
