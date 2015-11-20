@@ -1,3 +1,12 @@
+lxcfs (0.12-pve2) unstable; urgency=medium
+
+  * update to latest upstream
+    (commit 3c01956bd55ca06bdc268db65d737848068a6299)
+    
+  * remove use-line-buffered-mode-on-stdout.patch (fixed upstream)
+
+ -- Proxmox Support Team <support@proxmox.com>  Fri, 20 Nov 2015 10:22:09 +0100
+
 lxcfs (0.12-pve1) unstable; urgency=medium
 
   * use line buffered mode for stdout
