@@ -1,3 +1,10 @@
+lxcfs (0.13-pve1) unstable; urgency=medium
+
+  * update to latest upstream 0.13
+    (commit b4bf96ee4381ba23bc534c564b29f888a85ce710)
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 02 Dec 2015 11:55:06 +0100
+
 lxcfs (0.12-pve2) unstable; urgency=medium
 
   * update to latest upstream
