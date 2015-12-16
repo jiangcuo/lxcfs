@@ -1,0 +1,45 @@
+From bb3f1796d71b17a2dd0502b2c43a38d6d07efb46 Mon Sep 17 00:00:00 2001
+From: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Date: Mon, 14 Dec 2015 08:57:12 +0100
+Subject: [PATCH lxcfs] uptime: fix pid1 and reaper_busy times
+
+- reaper_busy was off by a factor of 10 (possibly originally
+for precision?)
+- get_pid1_time was expecting a '1' byte like in
+the pid_to/from_ns_wrapper functions instead of reading its
+value which is what is actually written
+
+Signed-off-by: Wolfgang Bumiller <w.bumiller@proxmox.com>
+---
+ lxcfs.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/lxcfs.c b/lxcfs.c
+index 90a0b7f..fe5ac3e 100644
+--- a/lxcfs.c
++++ b/lxcfs.c
+@@ -2449,10 +2449,9 @@ static long int get_pid1_time(pid_t pid)
+ 	ret = select(cpipe[0]+1, &s, NULL, NULL, &tv);
+ 	if (ret <= 0)
+ 		goto fail;
+-	ret = read(cpipe[0], &v, 1);
+-	if (ret != sizeof(char) || v != '1') {
++	ret = read(cpipe[0], &v, sizeof(v));
++	if (ret != sizeof(v))
+ 		goto fail;
+-	}
+ 
+ 	wait_for_pid(cpid);
+ 
+@@ -2607,7 +2606,7 @@ static unsigned long get_reaper_busy(pid_t task)
+ 	if (!cgfs_get_value("cpuacct", cgroup, "cpuacct.usage", &usage_str))
+ 		goto out;
+ 	usage = strtoul(usage_str, NULL, 10);
+-	usage /= 100000000;
++	usage /= 1000000000;
+ 
+ out:
+ 	free(cgroup);
+-- 
+2.1.4
+
