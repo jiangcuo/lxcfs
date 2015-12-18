@@ -1,3 +1,9 @@
+lxcfs (0.13-pve2) unstable; urgency=medium
+
+  * added pending uptime fix
+
+ -- Proxmox Support Team <support@proxmox.com>  Fri, 18 Dec 2015 09:15:03 +0100
+
 lxcfs (0.13-pve1) unstable; urgency=medium
 
   * update to latest upstream 0.13
