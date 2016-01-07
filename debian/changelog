@@ -1,3 +1,9 @@
+lxcfs (0.13-pve3) unstable; urgency=medium
+
+  * Add realloc fixes
+
+ -- Proxmox Support Team <support@proxmox.com>  Thu, 07 Jan 2016 16:25:34 +0100
+
 lxcfs (0.13-pve2) unstable; urgency=medium
 
   * added pending uptime fix
