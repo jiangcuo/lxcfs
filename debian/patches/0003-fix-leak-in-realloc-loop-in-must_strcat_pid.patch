@@ -1,0 +1,34 @@
+From cc1d9baadd760a3e6fc757d31569fbf46ad37dbd Mon Sep 17 00:00:00 2001
+From: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Date: Thu, 7 Jan 2016 11:32:59 +0100
+Subject: [PATCH lxcfs 3/5] fix leak in realloc loop in must_strcat_pid
+
+If the first realloc() call fails then 'd' becomes NULL,
+subsequent realloc() retries will behave like malloc() and
+the the original src pointer is never freed. Further more
+the newly allocated data then contains uninitialized data
+where the previous pids had been stored.
+Avoid this by passing the the original pointer from '*src'
+to realloc().
+
+Signed-off-by: Wolfgang Bumiller <w.bumiller@proxmox.com>
+---
+ lxcfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lxcfs.c b/lxcfs.c
+index 8605000..d738e79 100644
+--- a/lxcfs.c
++++ b/lxcfs.c
+@@ -87,7 +87,7 @@ static void must_strcat_pid(char **src, size_t *sz, size_t *asz, pid_t pid)
+ 		*asz = BUF_RESERVE_SIZE;
+ 	} else if (tmplen + *sz + 1 >= *asz) {
+ 		do {
+-			d = realloc(d, *asz + BUF_RESERVE_SIZE);
++			d = realloc(*src, *asz + BUF_RESERVE_SIZE);
+ 		} while (!d);
+ 		*src = d;
+ 		*asz += BUF_RESERVE_SIZE;
+-- 
+2.1.4
+

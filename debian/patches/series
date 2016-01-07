@@ -1,2 +1,5 @@
 do-not-start-without-lxcfs.patch
 0001-uptime-fix-pid1-and-reaper_busy-times.patch
+0001-fix-missing-dereferencing-in-must_strcat_pid.patch
+0003-fix-leak-in-realloc-loop-in-must_strcat_pid.patch
+0004-cgfs-fix-dorealloc-s-batch-allocation.patch
