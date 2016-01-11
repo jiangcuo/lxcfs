@@ -5,3 +5,9 @@
 
 %:
 	dh $@  --with autotools_dev,autoreconf,systemd,quilt
+
+override_dh_strip:
+	dh_strip --dbg-package=lxcfs-dbg
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/lxcfs

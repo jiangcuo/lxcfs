@@ -10,7 +10,8 @@ SRCTAR=${SRCDIR}.tgz
 ARCH:=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
 GITVERSION:=$(shell cat .git/refs/heads/master)
 
-DEB=${PACKAGE}_${PKGVER}-${DEBREL}_amd64.deb
+DEB=${PACKAGE}_${PKGVER}-${DEBREL}_amd64.deb \
+    ${PACKAGE}-dbg_${PKGVER}-${DEBREL}_amd64.deb
 
 all: ${DEB}
 
@@ -36,6 +37,7 @@ upload: ${DEB}
 	umount /pve/${RELEASE}; mount /pve/${RELEASE} -o rw 
 	mkdir -p /pve/${RELEASE}/extra
 	rm -f /pve/${RELEASE}/extra/${PACKAGE}_*.deb
+	rm -f /pve/${RELEASE}/extra/${PACKAGE}-dbg_*.deb
 	rm -f /pve/${RELEASE}/extra/Packages*
 	cp ${DEB} /pve/${RELEASE}/extra
 	cd /pve/${RELEASE}/extra; dpkg-scanpackages . /dev/null > Packages; gzip -9c Packages > Packages.gz

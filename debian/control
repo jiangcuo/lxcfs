@@ -15,3 +15,11 @@ Description: LXC userspace filesystem
  limitations of the Linux kernel. The main driver for this work was the
  need to run systemd based containers as a regular unprivileged user
  while still allowing systemd inside the container to interact with cgroups. 
+
+Package: lxcfs-dbg
+Architecture: any
+Section: debug
+Depends: lxcfs (= ${binary:Version}), ${misc:Depends}
+Description: lxcfs debugging symbols
+ This package contains the debugging symbols for lxcfs.
+
