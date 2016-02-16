@@ -3,7 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Proxmox Support Team <support@proxmox.com>
 Build-Depends: debhelper (>= 9), autotools-dev, dh-autoreconf, help2man,
-  pkg-config, libfuse-dev, dh-systemd
+  pkg-config, libfuse-dev, dh-systemd, quilt, libpam0g-dev
 Standards-Version: 3.9.5
 Homepage: https://linuxcontainers.org
 
