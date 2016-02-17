@@ -1,3 +1,9 @@
+lxcfs (2.0.0-pve1) unstable; urgency=medium
+
+  * update to 2.0.0-beta1 (Commit 551c58dd1a7fbaebe92dd0f1f80f1789faa3a2eb)
+  
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 17 Feb 2016 11:39:48 +0100
+
 lxcfs (0.13-pve3) unstable; urgency=medium
 
   * Add realloc fixes
