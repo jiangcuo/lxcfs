@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+  configure)
+    # Check for reload support in lxcfs
+    if [ -n "$2" ] && dpkg --compare-versions "$2" ge 2.0.0-pve1; then
+      # Check for running lxfs
+      if [ -f /run/lxcfs.pid ]; then
+        kill -USR1 `cat /run/lxcfs.pid`
+      fi
+    fi
+  ;;
+
+esac
+
+#DEBHELPER#
+
+exit 0
