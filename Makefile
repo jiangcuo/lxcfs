@@ -29,6 +29,7 @@ deb ${DEB}: ${SRCTAR}
 download ${SRCTAR}:
 	rm -rf ${SRCDIR} ${SRCTAR}
 	git clone git://github.com/lxc/lxcfs
+	cd lxcfs; git reset --hard f0f8b8511938cc680150d782a3add0ee4d60fb01
 	tar czf ${SRCTAR}.tmp ${SRCDIR}
 	mv ${SRCTAR}.tmp ${SRCTAR}
 
