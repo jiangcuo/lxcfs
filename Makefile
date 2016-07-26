@@ -1,8 +1,8 @@
 RELEASE=4.1
 
 PACKAGE=lxcfs
-PKGVER=2.0.0
-DEBREL=pve2
+PKGVER=2.0.2
+DEBREL=pve1
 
 SRCDIR=${PACKAGE}
 SRCTAR=${SRCDIR}.tgz
@@ -28,8 +28,7 @@ deb ${DEB}: ${SRCTAR}
 .PHONY: download
 download ${SRCTAR}:
 	rm -rf ${SRCDIR} ${SRCTAR}
-	git clone git://github.com/lxc/lxcfs
-	cd lxcfs; git reset --hard f0f8b8511938cc680150d782a3add0ee4d60fb01
+	git clone --depth=1 -b lxcfs-2.0.2 git://github.com/lxc/lxcfs
 	tar czf ${SRCTAR}.tmp ${SRCDIR}
 	mv ${SRCTAR}.tmp ${SRCTAR}
 

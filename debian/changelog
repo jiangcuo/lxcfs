@@ -1,3 +1,9 @@
+lxcfs (2.0.2-pve1) unstable; urgency=medium
+
+  * update to lxcfs-2.0.2 tag
+
+ -- Proxmox Support Team <support@proxmox.com>  Tue, 26 Jul 2016 14:55:59 +0200
+
 lxcfs (2.0.0-pve2) unstable; urgency=medium
 
   * update to commit f0f8b8511938cc680150d782a3add0ee4d60fb01
