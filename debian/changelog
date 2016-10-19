@@ -1,3 +1,9 @@
+lxcfs (2.0.4-pve2) unstable; urgency=medium
+
+  * fix #1173: /proc/meminfo content
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 19 Oct 2016 10:51:06 +0200
+
 lxcfs (2.0.4-pve1) unstable; urgency=medium
 
   * update to lxcfs-2.0.4 tag
