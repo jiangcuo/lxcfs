@@ -1,3 +1,2 @@
 do-not-start-without-lxcfs.patch
 fix-offsets-for-memory.stat-parsing.patch
-fix-Active-Inactive-proc-meminfo.patch
