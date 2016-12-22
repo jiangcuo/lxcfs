@@ -1,3 +1,9 @@
+lxcfs (2.0.5-pve2) unstable; urgency=medium
+
+  * fix swap values with nested cgroups
+
+ -- Proxmox Support Team <support@proxmox.com>  Thu, 22 Dec 2016 14:09:58 +0100
+
 lxcfs (2.0.5-pve1) unstable; urgency=medium
 
   * update to lxcfs-2.0.5 tag
