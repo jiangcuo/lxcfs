@@ -1,3 +1,1 @@
 do-not-start-without-lxcfs.patch
-fix-offsets-for-memory.stat-parsing.patch
-0001-fix-swap-values-with-nested-cgroups.patch
