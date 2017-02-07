@@ -15,7 +15,9 @@ DEB=${PACKAGE}_${PKGVER}-${DEBREL}_${ARCH}.deb \
 
 all: ${DEB}
 
-deb ${DEB}: ${SRCTAR}
+.PHONY: deb
+deb: ${DEB}
+${DEB}: ${SRCTAR}
 	rm -rf ${SRCDIR}
 	tar xf ${SRCTAR}
 	cp -a debian ${SRCDIR}/debian
