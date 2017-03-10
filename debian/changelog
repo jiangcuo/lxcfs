@@ -1,3 +1,9 @@
+lxcfs (2.0.6-pve500) unstable; urgency=medium
+
+  * bump version for stretch upgrade
+
+ -- Proxmox Support Team <support@proxmox.com>  Fri, 10 Mar 2017 14:29:55 +0100
+
 lxcfs (2.0.6-pve1) unstable; urgency=medium
 
   * update to lxcfs-2.0.6
