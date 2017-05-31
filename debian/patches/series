@@ -1,1 +1,2 @@
 do-not-start-without-lxcfs.patch
+0001-bindings-calculate-uptime-via-proc-pid-stat.patch
