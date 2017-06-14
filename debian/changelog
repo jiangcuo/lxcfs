@@ -1,3 +1,9 @@
+lxcfs (2.0.7-pve3) unstable; urgency=medium
+
+  * merged fix for process times from upstream
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 14 Jun 2017 11:31:40 +0200
+
 lxcfs (2.0.7-pve2) unstable; urgency=medium
 
   * fix uptime resetting when dropping caches on the host
