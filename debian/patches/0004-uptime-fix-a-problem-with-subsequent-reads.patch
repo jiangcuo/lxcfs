@@ -1,0 +1,59 @@
+From b0e5eb8fd812da9307a40604b6dea8ab17b55785 Mon Sep 17 00:00:00 2001
+From: Bernhard Miklautz <bernhard.miklautz@shacknet.at>
+Date: Thu, 3 Aug 2017 13:37:37 +0200
+Subject: [PATCH lxcfs 4/4] uptime: fix a problem with subsequent reads.
+
+When doing subsequent reads of uptime on an open file handle
+in the form:
+
+read
+lseek 0L, SEEK_SET
+read
+
+the second (and later) reads cause that the error
+"failed to write to cache" was printed. This
+happens for example with "top". top would print the error:
+
+bad data in /proc/uptime
+
+To fix this problem use the whole size of the buffer instead of the d->size
+because this is set on the first read.
+
+This behavior was introduced with commit 0ecddf023a4caf8e8d2fe7e9125d777a06c5ec12.
+
+Signed-off-by: Bernhard Miklautz <bernhard.miklautz@shacknet.at>
+---
+ bindings.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/bindings.c b/bindings.c
+index 9aa884a..114e694 100644
+--- a/bindings.c
++++ b/bindings.c
+@@ -3842,10 +3842,10 @@ static int proc_uptime_read(char *buf, size_t size, off_t offset,
+ #endif
+ 
+ 	if (offset){
+-		if (offset > d->size)
+-			return -EINVAL;
+ 		if (!d->cached)
+ 			return 0;
++		if (offset > d->size)
++			return -EINVAL;
+ 		int left = d->size - offset;
+ 		total_len = left > size ? size: left;
+ 		memcpy(buf, cache + offset, total_len);
+@@ -3860,8 +3860,8 @@ static int proc_uptime_read(char *buf, size_t size, off_t offset,
+ 	if (reaperage >= busytime)
+ 		idletime = reaperage - busytime;
+ 
+-	total_len = snprintf(d->buf, d->size, "%"PRIu64".00 %"PRIu64".00\n", reaperage, idletime);
+-	if (total_len < 0 || total_len >=  d->size){
++	total_len = snprintf(d->buf, d->buflen, "%"PRIu64".00 %"PRIu64".00\n", reaperage, idletime);
++	if (total_len < 0 || total_len >=  d->buflen){
+ 		lxcfs_error("%s\n", "failed to write to cache");
+ 		return 0;
+ 	}
+-- 
+2.11.0
+

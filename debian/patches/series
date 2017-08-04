@@ -2,3 +2,4 @@ do-not-start-without-lxcfs.patch
 0001-bindings-calculate-uptime-via-proc-pid-stat.patch
 0002-bindings-calculate-btime-correctly.patch
 0003-temporarily-revert-the-virtualization-of-btime-field.patch
+0004-uptime-fix-a-problem-with-subsequent-reads.patch
