@@ -1,7 +1,7 @@
 From 869c054b01ef90545ad758f048bf670e3ef8d812 Mon Sep 17 00:00:00 2001
 From: Christian Brauner <christian.brauner@ubuntu.com>
 Date: Mon, 12 Jun 2017 14:45:44 +0200
-Subject: [PATCH lxcfs 2/2] bindings: calculate btime correctly
+Subject: [PATCH lxcfs 2/4] bindings: calculate btime correctly
 
 Signed-off-by: Christian Brauner <christian.brauner@ubuntu.com>
 ---

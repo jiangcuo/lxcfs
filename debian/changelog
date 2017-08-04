@@ -1,3 +1,11 @@
+lxcfs (2.0.7-pve4) unstable; urgency=medium
+
+  * fix #1469: merged upstream fix for re-reads of /proc/uptime
+
+  * merged revert of virtualization of btime field in /proc/stat
+
+ -- Proxmox Support Team <support@proxmox.com>  Fri, 04 Aug 2017 08:20:59 +0200
+
 lxcfs (2.0.7-pve3) unstable; urgency=medium
 
   * merged fix for process times from upstream
