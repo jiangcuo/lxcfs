@@ -6,9 +6,6 @@
 %:
 	dh $@  --with autotools_dev,autoreconf,systemd,quilt
 
-override_dh_strip:
-	dh_strip --dbg-package=lxcfs-dbg
-
 # Don't install PAM module for now, we don't need it.
 override_dh_install:
 	rm $(CURDIR)/debian/lxcfs/lib/*/security/pam_cgfs.so

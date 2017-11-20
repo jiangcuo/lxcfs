@@ -9,7 +9,7 @@ ARCH:=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
 GITVERSION:=$(shell cat .git/refs/heads/master)
 
 DEB1=${PACKAGE}_${PKGVER}-${DEBREL}_${ARCH}.deb
-DEB2=${PACKAGE}-dbg_${PKGVER}-${DEBREL}_${ARCH}.deb
+DEB2=${PACKAGE}-dbgsym_${PKGVER}-${DEBREL}_${ARCH}.deb
 DEBS=$(DEB1) $(DEB2)
 
 all: ${DEB}
