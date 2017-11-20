@@ -1,6 +1,6 @@
 PACKAGE=lxcfs
-PKGVER=2.0.7
-DEBREL=pve4
+PKGVER=2.0.8
+DEBREL=1
 
 SRCDIR=${PACKAGE}
 SRCTAR=${SRCDIR}.tgz
@@ -43,7 +43,6 @@ distclean: clean
 .PHONY: clean
 clean:
 	rm -rf ${SRCDIR} ${SRCDIR}.tmp *_${ARCH}.deb *.changes *.dsc  *.buildinfo
-	find . -name '*~' -exec rm {} ';'
 
 .PHONY: dinstall
 dinstall: $(DEBS)
