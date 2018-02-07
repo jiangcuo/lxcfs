@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aaron Sokoloski <asokoloski@gmail.com>
+Date: Mon, 4 Dec 2017 12:30:37 -0600
+Subject: [PATCH lxcfs] Change MemAvailable figure in /proc/meminfo to include
+ cache memory -- Fixes #175 I think.
+
+MemAvailable represents roughly how much more memory we can use before
+we start swapping.  Page cache memory can be reclaimed if it's needed
+for something else, so it should count as available memory.  This
+change should also fix the "available" column of the "free" command,
+as well as the "avail Mem" value in "top", both of which come from
+MemAvailable.
+
+Note that this isn't perfectly accurate.  On a physical machine, the
+value for MemAvailable is the result of a calculation that takes into
+account that when memory gets low (but before it's completely
+exhausted), kswapd wakes up and starts paging things out.  See:
+
+https://github.com/torvalds/linux/blob/a0908a1b7d68706ee52ed4a039756e70c8e956e9/mm/page_alloc.c#L4553
+(si_mem_available function)
+
+I tried to think of a way to be more exact, but this calculation
+includes figures that we don't have available for a given cgroup
+hierarchy, such as reclaimable slab memory and the low watermark for
+zones.  So it's not really feasible to reproduce it exactly.
+
+Anyway, since the kernel calculation itself is just an estimation, it
+doesn't seem too bad that we're a little bit off.  Adding in the
+amount of memory used for page cache seems much better than what we
+were doing before (just copying the free memory figure), because that
+can be wrong by gigabytes.
+
+For a more detailed understanding of how MemAvailable comes about one
+should look at 34e431b0ae398fc54ea69ff85ec700722c9da773 in the Linux
+kernel tree.
+
+Signed-off-by: Aaron Sokoloski <asokoloski@gmail.com>
+---
+ bindings.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bindings.c b/bindings.c
+index fc62089..cfd386e 100644
+--- a/bindings.c
++++ b/bindings.c
+@@ -3165,7 +3165,7 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
+ 			snprintf(lbuf, 100, "MemFree:        %8lu kB\n", memlimit - memusage);
+ 			printme = lbuf;
+ 		} else if (startswith(line, "MemAvailable:")) {
+-			snprintf(lbuf, 100, "MemAvailable:   %8lu kB\n", memlimit - memusage);
++			snprintf(lbuf, 100, "MemAvailable:   %8lu kB\n", memlimit - memusage + cached);
+ 			printme = lbuf;
+ 		} else if (startswith(line, "SwapTotal:") && memswlimit > 0) {
+ 			sscanf(line+sizeof("SwapTotal:")-1, "%lu", &hostswtotal);
+-- 
+2.11.0
+
