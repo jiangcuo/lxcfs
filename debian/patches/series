@@ -1,4 +1,1 @@
 do-not-start-without-lxcfs.patch
-0001-Fix-inaccurate-values-in-proc-meminfo-for-containers.patch
-0002-Change-MemAvailable-figure-in-proc-meminfo-to-includ.patch
-0003-bindings-remove-unused-function.patch

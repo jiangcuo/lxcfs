@@ -6,9 +6,7 @@
 %:
 	dh $@  --with autotools_dev,autoreconf,systemd,quilt
 
-# Don't install PAM module for now, we don't need it.
 override_dh_install:
-	rm $(CURDIR)/debian/lxcfs/lib/*/security/pam_cgfs.so
 	find $(CURDIR)/debian/lxcfs/lib/ -type d -empty -delete
 
 override_dh_auto_install:
