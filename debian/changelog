@@ -1,8 +1,8 @@
-lxcfs (3.0.2-1) UNRELEASED; urgency=medium
+lxcfs (3.0.2-2) stretch; urgency=medium
 
   * update to lxcfs-3.0.2
 
- -- Proxmox Support Team <support@proxmox.com>  Tue, 18 Sep 2018 11:09:20 +0200
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 19 Sep 2018 09:16:25 +0200
 
 lxcfs (3.0.0-1) unstable; urgency=medium
 
