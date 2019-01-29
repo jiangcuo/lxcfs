@@ -1,6 +1,6 @@
 PACKAGE=lxcfs
-PKGVER=3.0.2
-DEBREL=1
+PKGVER != dpkg-parsechangelog -Sversion | cut -d- -f1
+PKGREL != dpkg-parsechangelog -Sversion | cut -d- -f2
 
 SRCDIR=${PACKAGE}
 BUILDSRC := $(SRCDIR).tmp
@@ -8,8 +8,8 @@ BUILDSRC := $(SRCDIR).tmp
 ARCH:=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
 GITVERSION:=$(shell git rev-parse HEAD)
 
-DEB1=${PACKAGE}_${PKGVER}-${DEBREL}_${ARCH}.deb
-DEB2=${PACKAGE}-dbgsym_${PKGVER}-${DEBREL}_${ARCH}.deb
+DEB1=${PACKAGE}_${PKGVER}-${PKGREL}_${ARCH}.deb
+DEB2=${PACKAGE}-dbgsym_${PKGVER}-${PKGREL}_${ARCH}.deb
 DEBS=$(DEB1) $(DEB2)
 
 all: ${DEB}
