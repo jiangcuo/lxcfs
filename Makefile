@@ -16,7 +16,7 @@ all: ${DEB}
 
 .PHONY: submodule
 submodule:
-	test -f "${SRCDIR}/debian/changelog" || git submodule update --init
+	test -f "${SRCDIR}/README" || git submodule update --init
 
 .PHONY: deb
 deb: $(DEBS)
