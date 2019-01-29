@@ -1,3 +1,11 @@
+lxcfs (3.0.3-pve1) stretch; urgency=medium
+
+  * fix #1870: includes loadavg patches
+
+  * build from master branch
+
+ -- Proxmox Support Team <support@proxmox.com>  Tue, 29 Jan 2019 11:31:36 +0100
+
 lxcfs (3.0.2-2) stretch; urgency=medium
 
   * update to lxcfs-3.0.2
