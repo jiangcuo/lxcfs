@@ -4,7 +4,7 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@  --with autotools_dev,autoreconf,systemd,quilt
+	dh $@  --with autoreconf,systemd,quilt
 
 override_dh_install:
 	find $(CURDIR)/debian/lxcfs/lib/ -type d -empty -delete
