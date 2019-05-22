@@ -4,12 +4,15 @@ set -e
 
 case "$1" in
   configure)
-    # Check for reload support in lxcfs
-    if [ -n "$2" ] && dpkg --compare-versions "$2" ge 2.0.0-pve1; then
-      # Check for running lxfs
-      if [ -f /run/lxcfs.pid ]; then
-        kill -USR1 `cat /run/lxcfs.pid`
-      fi
+    if test -n "$2"; then # upgrade
+        dh_action="reload-or-try-restart";
+    else
+        dh_action="start"
+    fi
+
+    unit=lxcfs.service
+    if systemctl -q is-enabled "$unit"; then
+        deb-systemd-invoke $dh_action "$unit"
     fi
   ;;
 
