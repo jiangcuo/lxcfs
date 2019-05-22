@@ -13,7 +13,7 @@ override_dh_auto_install:
 	dh_auto_install --destdir=debian/lxcfs
 
 override_dh_installinit:
-	dh_installinit -p lxcfs --no-restart-on-upgrade
+	dh_installsystemd -p lxcfs --no-restart-on-upgrade
 
 override_dh_systemd_start:
 	dh_systemd_start -p lxcfs --no-restart-on-upgrade lxcfs.service
