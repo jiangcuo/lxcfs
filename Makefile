@@ -33,7 +33,7 @@ $(DEB): $(BUILDDIR)
 
 .PHONY: upload
 upload: $(DEBS)
-	tar cf - ${DEBS} | ssh repoman@repo.proxmox.com upload --product pve --dist stretch
+	tar cf - ${DEBS} | ssh repoman@repo.proxmox.com upload --product pve --dist buster
 
 .PHONY: clean distclean
 clean:
