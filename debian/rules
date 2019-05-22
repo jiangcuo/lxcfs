@@ -8,6 +8,8 @@
 
 override_dh_install:
 	find $(CURDIR)/debian/lxcfs/lib/ -type d -empty -delete
+	sed -i "/dependency_libs/ s/'.*'/''/" \
+	    "$(CURDIR)/debian/lxcfs/usr/lib/x86_64-linux-gnu/lxcfs/liblxcfs.la"
 
 override_dh_auto_configure:
 	dh_auto_configure -- --with-init-script=systemd
