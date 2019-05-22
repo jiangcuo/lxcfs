@@ -1,3 +1,9 @@
+lxcfs (3.0.3-pve60) pve; urgency=medium
+
+  * bump for Debian Buster / PVE 6
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 22 May 2019 11:57:46 +0200
+
 lxcfs (3.0.3-pve1) stretch; urgency=medium
 
   * fix #1870: includes loadavg patches
