@@ -29,7 +29,7 @@ deb: $(DEBS)
 $(DBGDEB): $(DEB)
 $(DEB): $(BUILDDIR)
 	cd $(BUILDDIR); dpkg-buildpackage -rfakeroot -b -us -uc
-	#lintian $(DEBS)
+	lintian $(DEBS)
 
 .PHONY: upload
 upload: $(DEBS)
