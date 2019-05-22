@@ -4,7 +4,6 @@ include /usr/share/dpkg/architecture.mk
 PACKAGE=lxcfs
 
 SRCDIR=${PACKAGE}
-BUILDSRC := $(SRCDIR).tmp
 BUILDDIR ?= ${PACKAGE}-${DEB_VERSION_UPSTREAM}
 
 GITVERSION:=$(shell git rev-parse HEAD)
