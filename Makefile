@@ -1,44 +1,47 @@
+include /usr/share/dpkg/pkg-info.mk
+include /usr/share/dpkg/architecture.mk
+
 PACKAGE=lxcfs
-PKGVER != dpkg-parsechangelog -Sversion | cut -d- -f1
-PKGREL != dpkg-parsechangelog -Sversion | cut -d- -f2
 
 SRCDIR=${PACKAGE}
 BUILDSRC := $(SRCDIR).tmp
+BUILDDIR ?= ${PACKAGE}-${DEB_VERSION_UPSTREAM}
 
-ARCH:=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
 GITVERSION:=$(shell git rev-parse HEAD)
 
-DEB1=${PACKAGE}_${PKGVER}-${PKGREL}_${ARCH}.deb
-DEB2=${PACKAGE}-dbgsym_${PKGVER}-${PKGREL}_${ARCH}.deb
-DEBS=$(DEB1) $(DEB2)
+DEB=${PACKAGE}_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
+DBGDEB=${PACKAGE}-dbgsym_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
+DEBS=$(DEB) $(DBGDEB)
 
 all: ${DEB}
 
 .PHONY: submodule
 submodule:
 	test -f "${SRCDIR}/README" || git submodule update --init
+${SRCDIR}/README: submodule
+
+$(BUILDDIR): $(SRCDIR)/README debian
+	rm -rf $(BUILDDIR)
+	rsync -a $(SRCDIR)/ debian $(BUILDDIR)
+	echo "git clone git://git.proxmox.com/git/lxcfs.git\\ngit checkout $(GITVERSION)" > $(BUILDDIR)/debian/SOURCE
 
 .PHONY: deb
 deb: $(DEBS)
-$(DEB2): $(DEB1)
-$(DEB1): | submodule
-	rm -f *.deb
-	rm -rf $(BUILDSRC)
-	cp -a $(SRCDIR) $(BUILDSRC)
-	cp -a debian $(BUILDSRC)/debian
-	echo "git clone git://git.proxmox.com/git/lxc.git\\ngit checkout $(GITVERSION)" > $(BUILDSRC)/debian/SOURCE
-	cd $(BUILDSRC); dpkg-buildpackage -rfakeroot -b -us -uc
+$(DBGDEB): $(DEB)
+$(DEB): $(BUILDDIR)
+	cd $(BUILDDIR); dpkg-buildpackage -rfakeroot -b -us -uc
 	#lintian $(DEBS)
 
 .PHONY: upload
 upload: $(DEBS)
 	tar cf - ${DEBS} | ssh repoman@repo.proxmox.com upload --product pve --dist stretch
 
-distclean: clean
-
-.PHONY: clean
+.PHONY: clean distclean
 clean:
-	rm -rf $(BUILDSRC) *_${ARCH}.deb *.changes *.dsc  *.buildinfo
+	rm -rf $(PACKAGE)-*/ *.deb *.changes *.dsc  *.buildinfo
+
+distclean: clean
+	git submodule deinit --all
 
 .PHONY: dinstall
 dinstall: $(DEBS)
