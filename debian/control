@@ -3,9 +3,8 @@ Section: admin
 Priority: optional
 Maintainer: Proxmox Support Team <support@proxmox.com>
 Build-Depends: autotools-dev,
-               debhelper (>= 9),
+               debhelper (>= 10),
                dh-autoreconf,
-               dh-systemd,
                help2man,
                libfuse-dev,
                libpam0g-dev,
