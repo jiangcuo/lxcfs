@@ -1,3 +1,9 @@
+lxcfs (4.0.0-pve1) pve; urgency=medium
+
+  * update to lxcfs-4.0.0
+
+ -- Proxmox Support Team <support@proxmox.com>  Mon, 09 Mar 2020 09:25:07 +0100
+
 lxcfs (3.0.3-pve60) pve; urgency=medium
 
   * bump for Debian Buster / PVE 6
