@@ -4,7 +4,7 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@  --with autoreconf,systemd,quilt
+	dh $@  --with autoreconf,quilt
 
 override_dh_install:
 	find $(CURDIR)/debian/lxcfs/lib/ -type d -empty -delete
@@ -17,8 +17,8 @@ override_dh_auto_configure:
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/lxcfs
 
-override_dh_installinit:
-	dh_installsystemd -p lxcfs --no-restart-on-upgrade
+override_dh_installsystemd:
+	# just fuck off
 
 override_dh_systemd_start:
-	dh_systemd_start -p lxcfs --no-restart-on-upgrade lxcfs.service
+	dh_systemd_start -p lxcfs --no-stop-on-upgrade lxcfs.service
