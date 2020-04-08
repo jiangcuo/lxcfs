@@ -1,3 +1,9 @@
+lxcfs (4.0.2-pve1) pve; urgency=medium
+
+  * update to lxcfs-4.0.2
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 08 Apr 2020 09:41:29 +0200
+
 lxcfs (4.0.1-pve1) pve; urgency=medium
 
   * update to lxcfs-4.0.1
