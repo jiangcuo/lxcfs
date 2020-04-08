@@ -12,6 +12,7 @@ case "$1" in
 
     unit=lxcfs.service
     if systemctl -q is-enabled "$unit"; then
+        systemctl --system daemon-reload >/dev/null || true
         deb-systemd-invoke $dh_action "$unit"
     fi
   ;;
