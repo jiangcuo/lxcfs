@@ -1,3 +1,10 @@
+lxcfs (4.0.3-pve2) pve; urgency=medium
+
+  * silence a warning about failing to convert memlimits for containers with a
+    cgroupv2 memory controller and no memory limit
+
+ -- Proxmox Support Team <support@proxmox.com>  Fri, 24 Apr 2020 09:19:49 +0200
+
 lxcfs (4.0.3-pve1) pve; urgency=medium
 
   * update to lxcfs-4.0.3
