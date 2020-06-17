@@ -1,2 +1,1 @@
 do-not-start-without-lxcfs.patch
-extra/0001-proc_fuse-silence-error-when-we-find-no-memlimit.patch
