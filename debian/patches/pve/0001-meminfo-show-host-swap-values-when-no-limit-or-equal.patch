@@ -1,0 +1,38 @@
+From 8a0e1fd9d0c8866af5947ab2acee0c28e8827573 Mon Sep 17 00:00:00 2001
+From: Christian Brauner <christian.brauner@ubuntu.com>
+Date: Tue, 3 Nov 2020 22:27:05 +0100
+Subject: [PATCH lxcfs 1/8] meminfo: show host swap values when no limit or
+ equal limits are set
+
+Closes: #434
+Signed-off-by: Christian Brauner <christian.brauner@ubuntu.com>
+---
+ src/proc_fuse.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/src/proc_fuse.c b/src/proc_fuse.c
+index 907f5c7..7bc1eb0 100644
+--- a/src/proc_fuse.c
++++ b/src/proc_fuse.c
+@@ -1243,7 +1243,17 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
+ 
+ 				sscanf(line + STRLITERALLEN("SwapTotal:"), "%" PRIu64, &hostswtotal);
+ 
+-				if (hostswtotal < swtotal) {
++				/*
++				 * If swtotal is 0 it should mean that
++				 * memory.memsw.limit_in_bytes and
++				 * memory.limit_in_bytes are both unlimited or
++				 * both set to the same value. In both cases we
++				 * have no idea what the technical swap limit
++				 * is supposed to be (It's a shared limit
++				 * anyway.) so fallback to the host's values in
++				 * that case too.
++				 */
++				if ((hostswtotal < swtotal) || swtotal == 0) {
+ 					swtotal = hostswtotal;
+ 					host_swap = true;
+ 				}
+-- 
+2.20.1
+

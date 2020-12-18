@@ -1,3 +1,11 @@
+lxcfs (4.0.6-pve1) pve; urgency=medium
+
+  * update to 4.0.6
+
+  * add fixes for swap accounting from current stable-4 branch
+
+ -- Proxmox Support Team <support@proxmox.com>  Fri, 18 Dec 2020 10:39:07 +0100
+
 lxcfs (4.0.3-pve3) pve; urgency=medium
 
   * update to current stable-4.0 branch
