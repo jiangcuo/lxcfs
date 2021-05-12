@@ -1,3 +1,13 @@
+lxcfs (4.0.8-pve1) pve; urgency=medium
+
+  * re-build for Debian 11 Bullseye based releases
+
+  * note that the 4.0.6-pve1 release was almost identically code-wise, as all
+    relevant patches got backported from the newer, at that time not yet in a
+    tagged release, stable-4 branch.
+
+ -- Proxmox Support Team <support@proxmox.com>  Wed, 12 May 2021 16:55:24 +0200
+
 lxcfs (4.0.6-pve1) pve; urgency=medium
 
   * update to 4.0.6
