@@ -1,9 +1,1 @@
 do-not-start-without-lxcfs.patch
-pve/0001-meminfo-show-host-swap-values-when-no-limit-or-equal.patch
-pve/0002-README-clarify-SWAP.patch
-pve/0003-cgroups-Add-get_memory_swappiness.patch
-pve/0004-swap-Fix-usage-reporting.patch
-pve/0005-swap-Only-report-usage-when-swappiness-is-0.patch
-pve/0006-swap-Tweak-meminfo-logic.patch
-pve/0007-swap-Make-proc-swaps-match-proc-meminfo.patch
-pve/0008-swap-Remove-now-unused-variable.patch
