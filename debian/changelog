@@ -1,3 +1,11 @@
+lxcfs (4.0.8-pve2) pve; urgency=medium
+
+  * fix check for whether swap accounting is enabled in the kernel
+
+  * make meminfo/swap handling cgroupv2 aware
+
+ -- Proxmox Support Team <support@proxmox.com>  Thu, 08 Jul 2021 13:35:40 +0200
+
 lxcfs (4.0.8-pve1) pve; urgency=medium
 
   * re-build for Debian 11 Bullseye based releases
