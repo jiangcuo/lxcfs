@@ -1,1 +1,3 @@
 do-not-start-without-lxcfs.patch
+./0001-delay-check-for-swap-accounting.patch
+./0002-make-meminfo-and-swaps-cgroupv2-aware.patch
