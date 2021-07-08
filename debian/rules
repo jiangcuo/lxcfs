@@ -18,7 +18,4 @@ override_dh_auto_install:
 	dh_auto_install --destdir=debian/lxcfs
 
 override_dh_installsystemd:
-	# just fuck off
-
-override_dh_systemd_start:
-	dh_systemd_start -p lxcfs --no-stop-on-upgrade lxcfs.service
+	dh_installsystemd -p lxcfs --no-stop-on-upgrade lxcfs.service
