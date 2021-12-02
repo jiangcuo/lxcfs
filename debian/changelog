@@ -1,3 +1,9 @@
+lxcfs (4.0.11-pve1) bullseye; urgency=medium
+
+  * update to 4.0.11
+
+ -- Proxmox Support Team <support@proxmox.com>  Thu, 02 Dec 2021 12:41:01 +0100
+
 lxcfs (4.0.8-pve2) pve; urgency=medium
 
   * fix check for whether swap accounting is enabled in the kernel
