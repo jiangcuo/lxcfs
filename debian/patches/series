@@ -1,3 +1,4 @@
 do-not-start-without-lxcfs.patch
 extra/0001-make-meminfo-and-swaps-cgroupv2-aware.patch
 extra/0002-cgv2-assume-swap-is-supported.patch
+extra/0003-build-with-fuse2.patch
