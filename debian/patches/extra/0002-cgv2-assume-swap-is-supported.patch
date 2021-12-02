@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Date: Thu, 2 Dec 2021 13:05:28 +0100
+Subject: [PATCH lxcfs] cgv2: assume swap is supported
+
+because this is just wrong and fixing it is annoying
+
+Signed-off-by: Wolfgang Bumiller <w.bumiller@proxmox.com>
+---
+ src/cgroups/cgfsng.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/src/cgroups/cgfsng.c b/src/cgroups/cgfsng.c
+index 3eb4227..fed7911 100644
+--- a/src/cgroups/cgfsng.c
++++ b/src/cgroups/cgfsng.c
+@@ -626,12 +626,10 @@ static bool cgfsng_can_use_swap(struct cgroup_ops *ops)
+ 		return false;
+ 
+ 	if (is_unified_hierarchy(h)) {
+-		if (faccessat(h->fd, "memory.swap.max", F_OK, 0))
+-			return false;
+-
+-		if (faccessat(h->fd, "memory.swap.current", F_OK, 0))
+-			return false;
+-
++		/* the files to check for don't exist at the root cgroup
++		 * directory so let's assume yes, other kernel configs are
++		 * simply not supported on pve
++		 */
+ 		has_swap = true;
+ 	} else {
+ 		if (faccessat(h->fd, "memory.memsw.limit_in_bytes", F_OK, 0))

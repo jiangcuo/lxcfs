@@ -13,19 +13,19 @@ Signed-off-by: Wolfgang Bumiller <w.bumiller@proxmox.com>
  3 files changed, 57 insertions(+), 43 deletions(-)
 
 diff --git a/src/bindings.c b/src/bindings.c
-index b169af4..d4da43e 100644
+index eb62ddb..e417a13 100644
 --- a/src/bindings.c
 +++ b/src/bindings.c
-@@ -59,6 +59,7 @@
- static bool can_use_pidfd;
- static int can_use_swap = -1;
- struct cgroup_ops *cgroup_ops;
+@@ -44,6 +44,7 @@ static bool can_use_pidfd;
+ static bool can_use_swap;
+ static bool can_use_sys_cpu;
+ static bool has_versioned_opts;
 +static bool memory_is_cgroupv2;
  
  static volatile sig_atomic_t reload_successful;
  
-@@ -79,6 +80,11 @@ bool liblxcfs_can_use_swap(const char *cgroup)
- 	return can_use_swap;
+@@ -67,6 +68,11 @@ bool liblxcfs_has_versioned_opts(void)
+ 	return has_versioned_opts;
  }
  
 +bool liblxcfs_memory_is_cgroupv2(void)
@@ -36,7 +36,7 @@ index b169af4..d4da43e 100644
  /* Define pivot_root() if missing from the C library */
  #ifndef HAVE_PIVOT_ROOT
  static int pivot_root(const char *new_root, const char *put_old)
-@@ -847,6 +853,7 @@ static void __attribute__((constructor)) lxcfs_init(void)
+@@ -837,6 +843,7 @@ static void __attribute__((constructor)) lxcfs_init(void)
  				  pidfd = -EBADF;
  	int i = 0;
  	pid_t pid;
@@ -44,33 +44,33 @@ index b169af4..d4da43e 100644
  
  	lxcfs_info("Running constructor %s to reload liblxcfs", __func__);
  
-@@ -898,6 +905,9 @@ static void __attribute__((constructor)) lxcfs_init(void)
- 		lxcfs_info("Kernel supports pidfds");
- 	}
+@@ -894,6 +901,9 @@ static void __attribute__((constructor)) lxcfs_init(void)
+ 	else
+ 		lxcfs_info("Kernel does not support swap accounting");
  
 +	hierarchy = cgroup_ops->get_hierarchy(cgroup_ops, "memory");
 +	memory_is_cgroupv2 = hierarchy && is_unified_hierarchy(hierarchy);
 +
  	lxcfs_info("api_extensions:");
- 	for (i = 0; i < nr_api_extensions; i++)
- 		lxcfs_info("- %s", api_extensions[i]);
+ 	for (size_t nr = 0; nr < nr_api_extensions; nr++)
+ 		lxcfs_info("- %s", api_extensions[nr]);
 diff --git a/src/bindings.h b/src/bindings.h
-index a334947..9ab989a 100644
+index cd7d466..2b7c8f4 100644
 --- a/src/bindings.h
 +++ b/src/bindings.h
-@@ -92,6 +92,7 @@ extern void prune_init_slice(char *cg);
+@@ -98,6 +98,7 @@ extern void prune_init_slice(char *cg);
  extern bool supports_pidfd(void);
  extern bool liblxcfs_functional(void);
- extern bool liblxcfs_can_use_swap(const char *cgroup);
+ extern bool liblxcfs_can_use_swap(void);
 +extern bool liblxcfs_memory_is_cgroupv2(void);
+ extern bool liblxcfs_can_use_sys_cpu(void);
+ extern bool liblxcfs_has_versioned_opts(void);
  
- static inline int install_signal_handler(int signo,
- 					 void (*handler)(int, siginfo_t *, void *))
 diff --git a/src/proc_fuse.c b/src/proc_fuse.c
-index 9a5915c..6371b2c 100644
+index 94168c9..a07e8d6 100644
 --- a/src/proc_fuse.c
 +++ b/src/proc_fuse.c
-@@ -315,6 +315,43 @@ static inline bool startswith(const char *line, const char *pref)
+@@ -299,6 +299,43 @@ static inline bool startswith(const char *line, const char *pref)
  	return strncmp(line, pref, strlen(pref)) == 0;
  }
  
@@ -114,16 +114,16 @@ index 9a5915c..6371b2c 100644
  static int proc_swaps_read(char *buf, size_t size, off_t offset,
  			   struct fuse_file_info *fi)
  {
-@@ -323,7 +360,7 @@ static int proc_swaps_read(char *buf, size_t size, off_t offset,
+@@ -307,7 +344,7 @@ static int proc_swaps_read(char *buf, size_t size, off_t offset,
  	struct fuse_context *fc = fuse_get_context();
- 	struct lxcfs_opts *opts = (struct lxcfs_opts *)fuse_get_context()->private_data;
+ 	bool wants_swap = lxcfs_has_opt(fuse_get_context()->private_data, LXCFS_SWAP_ON);
  	struct file_info *d = INTTYPE_TO_PTR(fi->fh);
 -	uint64_t memswlimit = 0, memlimit = 0, memusage = 0, memswusage = 0,
 +	uint64_t memlimit = 0, memusage = 0,
  		 swtotal = 0, swusage = 0, memswpriority = 1,
  		 hostswtotal = 0, hostswfree = 0;
  	ssize_t total_len = 0;
-@@ -373,26 +410,8 @@ static int proc_swaps_read(char *buf, size_t size, off_t offset,
+@@ -353,26 +390,8 @@ static int proc_swaps_read(char *buf, size_t size, off_t offset,
  	if (safe_uint64(memusage_str, &memusage, 10) < 0)
  		lxcfs_error("Failed to convert memusage %s", memusage_str);
  
@@ -152,16 +152,16 @@ index 9a5915c..6371b2c 100644
  
  	total_len = snprintf(d->buf, d->size, "Filename\t\t\t\tType\t\tSize\tUsed\tPriority\n");
  
-@@ -1162,7 +1181,7 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
+@@ -1141,7 +1160,7 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
  	struct fuse_context *fc = fuse_get_context();
- 	struct lxcfs_opts *opts = (struct lxcfs_opts *)fuse_get_context()->private_data;
+ 	bool wants_swap = lxcfs_has_opt(fuse_get_context()->private_data, LXCFS_SWAP_ON);
  	struct file_info *d = INTTYPE_TO_PTR(fi->fh);
 -	uint64_t memlimit = 0, memusage = 0, memswlimit = 0, memswusage = 0,
 +	uint64_t memlimit = 0, memusage = 0,
  		 hosttotal = 0, swfree = 0, swusage = 0, swtotal = 0,
  		 memswpriority = 1;
  	struct memory_stat mstat = {};
-@@ -1216,26 +1235,8 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
+@@ -1193,26 +1212,8 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
  	 * Following values are allowed to fail, because swapaccount might be
  	 * turned off for current kernel.
  	 */
@@ -190,7 +190,7 @@ index 9a5915c..6371b2c 100644
  
  	f = fopen_cached("/proc/meminfo", "re", &fopen_cache);
  	if (!f)
-@@ -1274,7 +1275,9 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
+@@ -1251,7 +1252,9 @@ static int proc_meminfo_read(char *buf, size_t size, off_t offset,
  				   This is because the kernel can swap as much as it
  				   wants and not only up to swtotal. */
  
