@@ -11,10 +11,10 @@ Signed-off-by: Wolfgang Bumiller <w.bumiller@proxmox.com>
  1 file changed, 6 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index ccea4ec..9260137 100644
+index 07ac0c9..925dac4 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -61,13 +61,7 @@ AC_CONFIG_FILES([
+@@ -62,13 +62,7 @@ AC_CONFIG_FILES([
  
  AC_CHECK_LIB(pthread, main)
  
