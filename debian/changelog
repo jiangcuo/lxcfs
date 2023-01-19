@@ -1,3 +1,9 @@
+lxcfs (5.0.3-pve1) bullseye; urgency=medium
+
+  * update to 5.0.3
+
+ -- Proxmox Support Team <support@proxmox.com>  Thu, 19 Jan 2023 11:06:04 +0100
+
 lxcfs (4.0.12-pve1) bullseye; urgency=medium
 
   * update to 4.0.12
