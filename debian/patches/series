@@ -1,3 +1,2 @@
 do-not-start-without-lxcfs.patch
 extra/0001-cgv2-assume-swap-is-supported.patch
-extra/0002-build-with-fuse2.patch

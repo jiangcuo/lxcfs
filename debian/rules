@@ -4,20 +4,22 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@  --with autoreconf,quilt
+	dh $@ --with quilt
 
-override_dh_install:
-	find $(CURDIR)/debian/lxcfs/lib/ -type d -empty -delete
-	sed -i "/dependency_libs/ s/'.*'/''/" \
-	    "$(CURDIR)/debian/lxcfs/usr/lib/x86_64-linux-gnu/lxcfs/liblxcfs.la"
+override_dh_auto_clean:
+	rm -fr build
 
 override_dh_auto_configure:
-	dh_auto_configure -- --with-init-script=systemd \
-		FUSE_CFLAGS="$(shell pkg-config --cflags fuse)" \
-		FUSE_LIBS="$(shell pkg-config --libs fuse)"
+	mkdir -p build
+	cd build && meson .. --prefix=/usr \
+		-Dinit-script=systemd \
+		-Dfuse-version=2
 
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/lxcfs
 
 override_dh_installsystemd:
+	install -dm755 $(CURDIR)/debian/lxcfs/lib
+	mv $(CURDIR)/debian/lxcfs/usr/lib/systemd \
+	   $(CURDIR)/debian/lxcfs/lib/systemd
 	dh_installsystemd -p lxcfs --no-stop-on-upgrade lxcfs.service
