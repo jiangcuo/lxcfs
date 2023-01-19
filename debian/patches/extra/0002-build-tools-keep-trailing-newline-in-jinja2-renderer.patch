@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Wolfgang Bumiller <w.bumiller@proxmox.com>
+Date: Thu, 19 Jan 2023 11:13:46 +0100
+Subject: [PATCH 2/2] build: tools: keep trailing newline in jinja2 renderer
+
+Otherwise /usr/share/lxc/config/common.conf.d/00-lxcfs.conf
+loses its trailing newline
+
+Signed-off-by: Wolfgang Bumiller <w.bumiller@proxmox.com>
+---
+ tools/meson-render-jinja2.py | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/tools/meson-render-jinja2.py b/tools/meson-render-jinja2.py
+index 0f9fc43..c7b6c38 100755
+--- a/tools/meson-render-jinja2.py
++++ b/tools/meson-render-jinja2.py
+@@ -23,7 +23,12 @@ def parse_config_h(filename):
+ 
+ def render(filename, defines):
+     text = open(filename).read()
+-    template = jinja2.Template(text, trim_blocks=True, undefined=jinja2.StrictUndefined)
++    template = jinja2.Template(
++        text,
++        trim_blocks=True,
++        keep_trailing_newline=True,
++        undefined=jinja2.StrictUndefined,
++    )
+     return template.render(defines)
+ 
+ if __name__ == '__main__':
+-- 
+2.30.2
+
