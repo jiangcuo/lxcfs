@@ -6,8 +6,12 @@ Build-Depends: debhelper (>= 12),
                help2man,
                libfuse-dev,
                libpam0g-dev,
+               meson,
                pkg-config,
+               python3-jinja2,
                quilt,
+# FIXME: why systemd as b-d?!
+               systemd,
 Standards-Version: 4.5.1
 Homepage: https://linuxcontainers.org
 
