@@ -49,7 +49,7 @@ upload: $(DEBS)
 
 .PHONY: clean distclean
 clean:
-	rm -rf $(PACKAGE)-*/ *.deb *.changes *.dsc  *.buildinfo
+	rm -rf $(PACKAGE)-[0-9]*/ $(ORIG_SRC_TAR) *.deb *.dsc $(PACKAGE)*.debian.tar.[gx]z *.changes *.dsc *.buildinfo *.build
 
 distclean: clean
 	git submodule deinit --all
