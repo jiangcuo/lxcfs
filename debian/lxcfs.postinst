@@ -19,24 +19,6 @@ case "$1" in
 
 esac
 
-# Copied from dh_installsystemd/12.1.1
-if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ] ; then
-	# This will only remove masks created by d-s-h on package removal.
-	deb-systemd-helper unmask 'lxcfs.service' >/dev/null || true
-
-	# was-enabled defaults to true, so new installations run enable.
-	if deb-systemd-helper --quiet was-enabled 'lxcfs.service'; then
-		# Enables the unit on first installation, creates new
-		# symlinks on upgrades if the unit file has changed.
-		deb-systemd-helper enable 'lxcfs.service' >/dev/null || true
-	else
-		# Update the statefile to add new symlinks (if any), which need to be
-		# cleaned up on purge. Also remove old symlinks.
-		deb-systemd-helper update-state 'lxcfs.service' >/dev/null || true
-	fi
-fi
-
-# dh_installsystemd cannot do a reload, you can only choose between stop-start,
-# restart and try-restart. NONE of which are acceptable!
+#DEBHELPER#
 
 exit 0
