@@ -5,9 +5,11 @@ PACKAGE=lxcfs
 
 SRCDIR=${PACKAGE}
 BUILDDIR ?= ${PACKAGE}-${DEB_VERSION_UPSTREAM}
+ORIG_SRC_TAR=$(PACKAGE)_$(DEB_VERSION_UPSTREAM).orig.tar.gz
 
 GITVERSION:=$(shell git rev-parse HEAD)
 
+DSC=$(PACKAGE)_$(DEB_VERSION_UPSTREAM_REVISION).dsc
 DEB=${PACKAGE}_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
 DBGDEB=${PACKAGE}-dbgsym_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
 DEBS=$(DEB) $(DBGDEB)
@@ -30,6 +32,16 @@ $(DBGDEB): $(DEB)
 $(DEB): $(BUILDDIR)
 	cd $(BUILDDIR); dpkg-buildpackage -rfakeroot -b -us -uc
 	lintian $(DEBS)
+
+$(ORIG_SRC_TAR): $(BUILDDIR)
+	tar czf $(ORIG_SRC_TAR) -C $(BUILDDIR) .
+
+.PHONY: dsc
+dsc: $(DSC)
+$(DSC): $(ORIG_SRC_TAR) $(BUILDDIR)
+	rm -f *.dsc
+	cd $(BUILDDIR); dpkg-buildpackage -S -us -uc -d
+	lintian $(DSC)
 
 .PHONY: upload
 upload: $(DEBS)
