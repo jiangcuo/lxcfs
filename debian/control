@@ -2,7 +2,7 @@ Source: lxcfs
 Section: admin
 Priority: optional
 Maintainer: Proxmox Support Team <support@proxmox.com>
-Build-Depends: debhelper (>= 12),
+Build-Depends: debhelper-compat (= 13),
                help2man,
                libfuse-dev,
                libpam0g-dev,
