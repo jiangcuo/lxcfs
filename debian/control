@@ -12,7 +12,7 @@ Build-Depends: debhelper-compat (= 13),
                quilt,
 # FIXME: why systemd as b-d?!
                systemd,
-Standards-Version: 4.5.1
+Standards-Version: 4.6.2
 Homepage: https://linuxcontainers.org
 
 Package: lxcfs
