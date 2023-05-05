@@ -2,9 +2,7 @@ Source: lxcfs
 Section: admin
 Priority: optional
 Maintainer: Proxmox Support Team <support@proxmox.com>
-Build-Depends: autotools-dev,
-               debhelper (>= 12),
-               dh-autoreconf,
+Build-Depends: debhelper (>= 12),
                help2man,
                libfuse-dev,
                libpam0g-dev,
