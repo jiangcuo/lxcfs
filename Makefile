@@ -3,23 +3,23 @@ include /usr/share/dpkg/architecture.mk
 
 PACKAGE=lxcfs
 
-SRCDIR=${PACKAGE}
-BUILDDIR ?= ${PACKAGE}-${DEB_VERSION_UPSTREAM}
+SRCDIR=$(PACKAGE)
+BUILDDIR ?= $(PACKAGE)-$(DEB_VERSION_UPSTREAM)
 ORIG_SRC_TAR=$(PACKAGE)_$(DEB_VERSION_UPSTREAM).orig.tar.gz
 
 GITVERSION:=$(shell git rev-parse HEAD)
 
 DSC=$(PACKAGE)_$(DEB_VERSION_UPSTREAM_REVISION).dsc
-DEB=${PACKAGE}_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
-DBGDEB=${PACKAGE}-dbgsym_${DEB_VERSION_UPSTREAM_REVISION}_${DEB_BUILD_ARCH}.deb
+DEB=$(PACKAGE)_$(DEB_VERSION_UPSTREAM_REVISION)_$(DEB_BUILD_ARCH).deb
+DBGDEB=$(PACKAGE)-dbgsym_$(DEB_VERSION_UPSTREAM_REVISION)_$(DEB_BUILD_ARCH).deb
 DEBS=$(DEB) $(DBGDEB)
 
-all: ${DEB}
+all: $(DEB)
 
 .PHONY: submodule
 submodule:
-	test -f "${SRCDIR}/README" || git submodule update --init
-${SRCDIR}/README: submodule
+	test -f "$(SRCDIR)/README" || git submodule update --init
+$(SRCDIR)/README: submodule
 
 $(BUILDDIR): $(SRCDIR)/README debian
 	rm -rf $(BUILDDIR)
@@ -48,7 +48,7 @@ $(DSC): $(ORIG_SRC_TAR) $(BUILDDIR)
 
 .PHONY: upload
 upload: $(DEBS)
-	tar cf - ${DEBS} | ssh repoman@repo.proxmox.com upload --product pve --dist bookworm
+	tar cf - $(DEBS) | ssh repoman@repo.proxmox.com upload --product pve --dist bookworm
 
 .PHONY: clean distclean
 clean:
