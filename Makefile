@@ -36,7 +36,7 @@ sbuild: $(DSC)
 	sbuild $(DSC)
 
 $(ORIG_SRC_TAR): $(BUILDDIR)
-	tar czf $(ORIG_SRC_TAR) -C $(BUILDDIR) .
+	tar czf $(ORIG_SRC_TAR) --exclude="$(BUILDDIR)/debian" $(BUILDDIR)
 
 .PHONY: dsc
 dsc: $(DSC)
