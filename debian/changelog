@@ -1,3 +1,9 @@
+lxcfs (5.0.3-pve3) bookworm; urgency=medium
+
+  * build with fuse3, this requires a full restart of all running containers
+
+ -- Proxmox Support Team <support@proxmox.com>  Tue, 16 May 2023 12:08:08 +0200
+
 lxcfs (5.0.3-pve2) bookworm; urgency=medium
 
   * re-build for Proxmox VE 8.x (Debian 12 Bullseye based) release
