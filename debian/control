@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Proxmox Support Team <support@proxmox.com>
 Build-Depends: debhelper-compat (= 13),
                help2man,
-               libfuse-dev,
+               libfuse3-dev,
                libpam0g-dev,
                meson,
                pkg-config,

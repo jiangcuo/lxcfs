@@ -13,7 +13,7 @@ override_dh_auto_configure:
 	mkdir -p build
 	cd build && meson .. --prefix=/usr \
 		-Dinit-script=systemd \
-		-Dfuse-version=2
+		-Dfuse-version=3
 
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/lxcfs
