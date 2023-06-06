@@ -39,11 +39,13 @@ $(ORIG_SRC_TAR): $(BUILDDIR)
 	tar czf $(ORIG_SRC_TAR) --exclude="$(BUILDDIR)/debian" $(BUILDDIR)
 
 .PHONY: dsc
-dsc: $(DSC)
-$(DSC): $(ORIG_SRC_TAR) $(BUILDDIR)
-	rm -f *.dsc
-	cd $(BUILDDIR); dpkg-buildpackage -S -us -uc -d
+dsc:
+	$(MAKE) clean
+	$(MAKE) $(DSC)
 	lintian $(DSC)
+
+$(DSC): $(ORIG_SRC_TAR) $(BUILDDIR)
+	cd $(BUILDDIR); dpkg-buildpackage -S -us -uc -d
 
 .PHONY: upload
 upload: UPLOAD_DIST ?= $(DEB_DISTRIBUTION)
@@ -52,7 +54,8 @@ upload: $(DEBS)
 
 .PHONY: clean distclean
 clean:
-	rm -rf $(PACKAGE)-[0-9]*/ $(ORIG_SRC_TAR) *.deb *.dsc $(PACKAGE)*.debian.tar.[gx]z *.changes *.dsc *.buildinfo *.build
+	rm -rf $(PACKAGE)-[0-9]*/
+	rm -rf $(PACKAGE)*.tar* *.deb *.dsc *.changes *.dsc *.buildinfo *.build
 
 distclean: clean
 	git submodule deinit --all
