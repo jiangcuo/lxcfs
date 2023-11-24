@@ -1,3 +1,3 @@
 [submodule "lxcfs"]
 	path = lxcfs
-	url = ../mirror_lxcfs
+	url = https://github.com/Loongson-Cloud-Community/lxcfs.git
