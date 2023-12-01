@@ -2,6 +2,8 @@
 
 set -e
 
+#DEBHELPER#
+
 case "$1" in
   configure)
     if test -n "$2"; then # upgrade
@@ -18,7 +20,5 @@ case "$1" in
   ;;
 
 esac
-
-#DEBHELPER#
 
 exit 0
