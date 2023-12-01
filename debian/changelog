@@ -1,3 +1,10 @@
+lxcfs (5.0.3-pve4) bookworm; urgency=medium
+
+  * d/postinst: order lxcfs service-enablement handling before
+    service-start-or-reload override
+
+ -- Proxmox Support Team <support@proxmox.com>  Fri, 01 Dec 2023 10:44:02 +0100
+
 lxcfs (5.0.3-pve3) bookworm; urgency=medium
 
   * build with fuse3, this requires a full restart of all running containers
